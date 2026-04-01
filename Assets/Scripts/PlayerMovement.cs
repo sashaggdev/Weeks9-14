@@ -83,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         if (boostCoroutine != null)
         {
             StopCoroutine(boostCoroutine);
+            boostCoroutine = null;
             moveSpeed = baseSpeed;
             Debug.Log("Speed boost cancelled");
         }
