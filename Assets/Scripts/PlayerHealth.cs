@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class PlayerHealth : MonoBehaviour
+{
+
+    public float maxHP = 100f;
+    private float currentHP;
+    public float healAmount = 25f;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        currentHP = maxHP;
+    }
+
+    public void Heal()
+    {
+        // Heal the player and ensure HP does not exceed maxHP
+        currentHP = Mathf.Clamp(currentHP + healAmount, 0, maxHP);
+
+        Debug.Log("Player healed. Current HP: " + currentHP);
+    }
+
+    public void TakeDamage(float amount)
+    {
+        currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
+
+        Debug.Log("Player took damage. Current HP: " + currentHP);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}

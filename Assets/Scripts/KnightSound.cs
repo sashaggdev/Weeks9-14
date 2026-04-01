@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Script : MonoBehaviour
+public class KnightSound : MonoBehaviour
 {
 
     public AudioSource SFX;
