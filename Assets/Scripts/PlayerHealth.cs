@@ -6,11 +6,13 @@ public class PlayerHealth : MonoBehaviour
     public float maxHP = 100f;
     private float currentHP;
     public float healAmount = 25f;
+    private PlayerMovement movement;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHP = maxHP;
+        movement = GetComponent<PlayerMovement>();
     }
 
     public void Heal()
@@ -24,8 +26,18 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float amount)
     {
         currentHP = Mathf.Clamp(currentHP - amount, 0, maxHP);
-
         Debug.Log("Player took damage. Current HP: " + currentHP);
+
+        // Trigger hurt animation and stun
+        if (movement != null)
+        {
+            movement.TriggerHurt();
+        }
+
+        if (currentHP <= 0)
+        {
+            Debug.Log("Game Over");
+        }
     }
 
     // Update is called once per frame
