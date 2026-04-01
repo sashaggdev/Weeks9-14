@@ -15,16 +15,17 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine boostCoroutine;
     private Animator animator;
     private bool isStunned = false;
+    private SpriteRenderer spriteRenderer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-
         // Store value of original speed before boost
         baseSpeed = moveSpeed;
 
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Called when the move action is triggered
@@ -59,6 +60,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.linearVelocity = new UnityEngine.Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        // Flip sprite based on direction
+        if (moveInput > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (moveInput < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
     }
 
     // Called when the jump action is triggered
