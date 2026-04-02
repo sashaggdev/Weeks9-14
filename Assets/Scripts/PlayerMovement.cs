@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool isStunned = false;
     private SpriteRenderer spriteRenderer;
+    private bool isGrounded = false;
+    public AudioSource boostSound;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
             // Always store the input, even during stun
             moveInput = context.ReadValue<UnityEngine.Vector2>().x;
 
-            if (!isStunned)
+            if (!isStunned && isGrounded)
             {
                 animator.SetBool("isRunning", true);
             }
@@ -52,6 +54,17 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Check if player is falling (moving downward and not grounded)
+        if (rb.linearVelocity.y < -0.1f && !isGrounded)
+        {
+            animator.SetBool("isFalling", true);
+        }
+        else
+        {
+            animator.SetBool("isFalling", false);
+        }
+        
+        
         // Don't apply movement if stunned
         if (isStunned)
         {
@@ -75,12 +88,15 @@ public class PlayerMovement : MonoBehaviour
     // Called when the jump action is triggered
     public void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started && !isStunned)
+        if (context.started && !isStunned && isGrounded)
         {
             rb.linearVelocity = new UnityEngine.Vector2(rb.linearVelocity.x, jumpForce);
 
-            // Trigger jump animation
-            animator.SetTrigger("Jump");
+            // Only play jump animation if not rolling (speed boost)
+            if (!animator.GetBool("isRolling"))
+            {
+                animator.SetTrigger("Jump");
+            }
         }
     }
 
@@ -100,13 +116,21 @@ public class PlayerMovement : MonoBehaviour
     {
         // Apply boost
         moveSpeed = baseSpeed * boostMultiplier;
+        animator.SetBool("isRolling", true);
         Debug.Log("Speed boost started.");
+
+        // Boost sound effect
+        if (boostSound != null)
+        {
+            boostSound.Play();
+        }
 
         // Wait for boostDuration
         yield return new WaitForSeconds(boostDuration);
 
         // Return to original speed
         moveSpeed = baseSpeed;
+        animator.SetBool("isRolling", false);
         Debug.Log("Speed boost ended.");
     }
 
@@ -119,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
             boostCoroutine = null;
             moveSpeed = baseSpeed;
             Debug.Log("Speed boost cancelled");
+            animator.SetBool("isRolling", false);
         }
     }
 
@@ -160,6 +185,31 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput != 0f)
         {
             animator.SetBool("isRunning", true);
+        }
+    }
+
+    // Called when player lands
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            animator.SetBool("isFalling", false);
+
+            // If holding a direction, resume run animation
+            if (moveInput != 0f && !isStunned)
+            {
+                animator.SetBool("isRunning", true);
+            }
+        }
+    }
+
+    // Called when player leaves ground
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 
