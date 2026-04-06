@@ -468,7 +468,7 @@ GameObject:
   - component: {fileID: 116897033}
   m_Layer: 0
   m_Name: Hazard (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -646,7 +646,7 @@ Transform:
   m_GameObject: {fileID: 116897032}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.47678, y: -6.73293, z: 0}
+  m_LocalPosition: {x: -2.54, y: -6.725, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -703,7 +703,7 @@ GameObject:
   - component: {fileID: 462472257}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 552267123}
   m_Layer: 0
   m_Name: Hazard
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2421,7 +2421,7 @@ GameObject:
   - component: {fileID: 889116623}
   m_Layer: 0
   m_Name: Hazard (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2599,7 +2599,7 @@ Transform:
   m_GameObject: {fileID: 889116622}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.3572197, y: -6.7059298, z: 0}
+  m_LocalPosition: {x: 5.44, y: -6.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2913,10 +2913,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 462472261}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -248.93, y: 104.41}
-  m_SizeDelta: {x: 34.1353, y: 31.175}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 27.068, y: -50.587}
+  m_SizeDelta: {x: 34.135315, y: 31.175003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1174671986
 MonoBehaviour:
