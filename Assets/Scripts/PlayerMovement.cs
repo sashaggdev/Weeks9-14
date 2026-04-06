@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private bool isStunned = false;
     private SpriteRenderer spriteRenderer;
-    private bool isGrounded = false;
+    private int groundContactCount = 0;
+    private bool isGrounded => groundContactCount > 0;
     public AudioSource boostSound;
     public HUDController hud;
 
@@ -217,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            groundContactCount++;
             animator.SetBool("isFalling", false);
 
             // If holding a direction, resume run animation
@@ -233,7 +234,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            groundContactCount--;
         }
     }
 
