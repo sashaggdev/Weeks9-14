@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isGrounded = false;
     public AudioSource boostSound;
+    public HUDController hud;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -125,6 +126,12 @@ public class PlayerMovement : MonoBehaviour
             boostSound.Play();
         }
 
+        // Boost indicator
+        if (hud != null)
+        {
+            hud.ShowBoost(boostDuration);
+        }
+
         // Wait for boostDuration
         yield return new WaitForSeconds(boostDuration);
 
@@ -132,6 +139,16 @@ public class PlayerMovement : MonoBehaviour
         moveSpeed = baseSpeed;
         animator.SetBool("isRolling", false);
         Debug.Log("Speed boost ended.");
+
+        if (boostSound != null)
+        {
+            boostSound.Stop();
+        }
+
+        if (hud != null)
+        {
+            hud.HideBoost();
+        }
     }
 
     // Called when damage is taken, stops boost
@@ -144,6 +161,11 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = baseSpeed;
             Debug.Log("Speed boost cancelled");
             animator.SetBool("isRolling", false);
+        }
+
+        if (hud != null)
+        {
+            hud.HideBoost();
         }
     }
 
@@ -169,6 +191,8 @@ public class PlayerMovement : MonoBehaviour
         isStunned = false;
 
         animator.SetBool("isHurt", false);
+
+        Debug.Log("Stun ended. isGrounded: " + isGrounded + " moveInput: " + moveInput);
 
         if (moveInput != 0f)
         {
